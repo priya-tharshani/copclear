@@ -1,0 +1,4108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CopClear | Traffic Duty Management</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#eef3f8;
+    color:#172b42;
+}
+
+button,input,select,textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* LOGIN */
+
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(rgba(4,25,49,.78),rgba(4,25,49,.88)),
+        url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80")
+        center/cover;
+    padding:20px;
+}
+
+.login-box{
+    width:950px;
+    max-width:100%;
+    min-height:570px;
+    background:white;
+    border-radius:22px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+}
+
+.login-left{
+    width:48%;
+    padding:55px;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background:
+        linear-gradient(rgba(5,31,58,.72),rgba(5,31,58,.85)),
+        url("https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1000&q=80")
+        center/cover;
+}
+
+.logo{
+    font-size:46px;
+    font-weight:800;
+}
+
+.logo span{
+    color:#42b8ff;
+}
+
+.login-left h2{
+    margin-top:15px;
+    font-size:22px;
+}
+
+.login-left p{
+    margin-top:12px;
+    line-height:1.7;
+    color:#dce9f6;
+}
+
+.login-feature{
+    margin-top:35px;
+    padding:18px;
+    border-left:4px solid #42b8ff;
+    background:rgba(255,255,255,.09);
+    border-radius:8px;
+}
+
+.login-right{
+    width:52%;
+    padding:55px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.login-right h1{
+    color:#092d52;
+}
+
+.login-sub{
+    margin:8px 0 25px;
+    color:#748397;
+}
+
+.role-buttons{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.role-btn{
+    flex:1;
+    padding:13px;
+    border:1px solid #d3dde7;
+    background:#f5f8fb;
+    border-radius:8px;
+    font-weight:bold;
+    color:#334b65;
+}
+
+.role-btn.active{
+    background:#092d52;
+    color:white;
+}
+
+.form-label{
+    display:block;
+    margin:13px 0 7px;
+    font-weight:bold;
+}
+
+.form-input{
+    width:100%;
+    padding:13px;
+    border:1px solid #ccd7e2;
+    border-radius:8px;
+    outline:none;
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    margin-top:22px;
+    background:#092d52;
+    color:white;
+    border:0;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.login-btn:hover{
+    background:#104c7d;
+}
+
+.login-error{
+    color:#d62d2d;
+    text-align:center;
+    margin-top:12px;
+    min-height:18px;
+}
+
+.demo-login{
+    margin-top:20px;
+    background:#f2f6fa;
+    padding:12px;
+    border-radius:8px;
+    font-size:12px;
+    color:#607086;
+}
+
+/* APP */
+
+#app{
+    min-height:100vh;
+}
+
+.topbar{
+    height:70px;
+    background:#092d52;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.top-brand{
+    font-size:25px;
+    font-weight:800;
+}
+
+.top-brand span{
+    color:#42b8ff;
+}
+
+.top-user{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.user-badge{
+    background:#17466f;
+    padding:9px 14px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.logout-btn{
+    background:#c73535;
+    border:0;
+    color:white;
+    padding:9px 14px;
+    border-radius:7px;
+}
+
+.sidebar{
+    width:250px;
+    position:fixed;
+    left:0;
+    top:70px;
+    bottom:0;
+    background:#071f38;
+    overflow-y:auto;
+    padding:15px 10px;
+}
+
+.side-title{
+    color:#7fa0bd;
+    font-size:11px;
+    text-transform:uppercase;
+    padding:15px 12px 8px;
+    letter-spacing:1px;
+}
+
+.nav-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#d7e3ed;
+    text-align:left;
+    padding:12px;
+    border-radius:7px;
+    margin-bottom:3px;
+    font-size:14px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    background:#16466d;
+    color:white;
+}
+
+.main{
+    margin-left:250px;
+    padding:95px 30px 30px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.page-header h1{
+    color:#092d52;
+}
+
+.page-header p{
+    color:#718096;
+    margin-top:5px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 14px rgba(20,40,60,.08);
+}
+
+.stat-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.stat-number{
+    font-size:29px;
+    font-weight:bold;
+    color:#092d52;
+    margin-top:8px;
+}
+
+.stat-label{
+    color:#708095;
+    font-size:13px;
+}
+
+.stat-icon{
+    width:45px;
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#e8f3fb;
+    border-radius:10px;
+    font-size:22px;
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.table-card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 3px 14px rgba(20,40,60,.08);
+    overflow-x:auto;
+}
+
+.table-card h3{
+    margin-bottom:15px;
+    color:#092d52;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px 10px;
+    border-bottom:1px solid #e5ebf0;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#f4f7fa;
+    color:#38516a;
+}
+
+.action-btn{
+    border:0;
+    padding:7px 11px;
+    border-radius:6px;
+    color:white;
+    background:#126aa3;
+    margin:2px;
+    font-size:12px;
+}
+
+.action-btn.green{
+    background:#20834b;
+}
+
+.action-btn.red{
+    background:#c73535;
+}
+
+.action-btn.orange{
+    background:#c7771e;
+}
+
+.badge{
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:11px;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.badge.green{
+    background:#dff5e8;
+    color:#16703c;
+}
+
+.badge.orange{
+    background:#fff0d8;
+    color:#9b5d08;
+}
+
+.badge.red{
+    background:#ffe1e1;
+    color:#ad2424;
+}
+
+.badge.blue{
+    background:#dceefd;
+    color:#126095;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.form-group{
+    margin-bottom:12px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccd7e2;
+    border-radius:7px;
+    outline:none;
+}
+
+.primary-btn{
+    border:0;
+    background:#092d52;
+    color:white;
+    padding:11px 18px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.notification{
+    padding:15px;
+    background:white;
+    border-left:4px solid #126aa3;
+    border-radius:8px;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.notification.unread{
+    background:#edf7ff;
+}
+
+.notification-title{
+    font-weight:bold;
+    color:#092d52;
+}
+
+.notification-time{
+    color:#7b8b9d;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.profile-box{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:25px;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+}
+
+.profile-avatar{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:#092d52;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:55px;
+    margin:auto;
+}
+
+.profile-details div{
+    padding:12px 0;
+    border-bottom:1px solid #e4eaf0;
+}
+
+.profile-details strong{
+    display:inline-block;
+    width:150px;
+}
+
+.progress{
+    height:9px;
+    background:#e3eaf0;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress-bar{
+    height:100%;
+    background:#126aa3;
+}
+
+.alert-box{
+    padding:15px;
+    border-radius:8px;
+    background:#fff4e1;
+    border-left:4px solid #d4841e;
+    margin-bottom:12px;
+}
+
+.success-box{
+    padding:15px;
+    border-radius:8px;
+    background:#e3f7ea;
+    border-left:4px solid #24824a;
+    margin-bottom:12px;
+}
+
+.map-layout{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:15px;
+}
+
+.map-side{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+}
+
+.map-category{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:7px;
+    margin-bottom:8px;
+    text-align:left;
+    font-weight:bold;
+    background:#edf2f6;
+    color:#203c57;
+}
+
+.map-category:hover{
+    background:#dbeafa;
+}
+
+.map-area{
+    min-height:530px;
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+    background:
+        linear-gradient(120deg,#dce8d7,#edf0dd);
+    border:2px solid #c5d0c0;
+}
+
+.map-road{
+    position:absolute;
+    background:#fafafa;
+    border:2px solid #c2c8c0;
+}
+
+.road1{
+    width:110%;
+    height:38px;
+    top:43%;
+    left:-5%;
+    transform:rotate(-8deg);
+}
+
+.road2{
+    width:38px;
+    height:110%;
+    top:-5%;
+    left:51%;
+    transform:rotate(8deg);
+}
+
+.road3{
+    width:80%;
+    height:25px;
+    top:25%;
+    left:8%;
+    transform:rotate(28deg);
+}
+
+.map-label{
+    position:absolute;
+    background:white;
+    padding:7px 10px;
+    border-radius:5px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+    font-size:12px;
+    font-weight:bold;
+}
+
+.marker{
+    position:absolute;
+    width:25px;
+    height:25px;
+    border-radius:50% 50% 50% 0;
+    transform:rotate(-45deg);
+    background:#d33131;
+    border:3px solid white;
+    box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+
+.marker span{
+    transform:rotate(45deg);
+    display:block;
+    text-align:center;
+    color:white;
+    line-height:19px;
+    font-size:10px;
+}
+
+.map-info{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    right:20px;
+    background:white;
+    padding:15px;
+    border-radius:9px;
+    box-shadow:0 3px 15px rgba(0,0,0,.18);
+}
+
+.empty{
+    padding:30px;
+    text-align:center;
+    color:#7b8998;
+}
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#092d52;
+    color:white;
+    padding:15px 20px;
+    border-radius:9px;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+    z-index:5000;
+    display:none;
+}
+
+.toast.show{
+    display:block;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .login-box{
+        flex-direction:column;
+    }
+
+    .login-left,
+    .login-right{
+        width:100%;
+    }
+
+    .login-left{
+        min-height:280px;
+        padding:35px;
+    }
+
+    .sidebar{
+        width:210px;
+    }
+
+    .main{
+        margin-left:210px;
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .map-layout{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<section id="loginPage">
+
+<div class="login-box">
+
+<div class="login-left">
+
+<div class="logo">Cop<span>Clear</span></div>
+
+<h2>Smart Traffic Duty Management</h2>
+
+<p>
+A professional traffic duty allocation and workload management
+system designed for Sivakasi Traffic Police.
+</p>
+
+<div class="login-feature">
+<strong>🚦 One Platform. Every Journey. Every Duty.</strong>
+<br><br>
+Admin + Traffic Police Management
+</div>
+
+</div>
+
+<div class="login-right">
+
+<h1>Welcome Back</h1>
+<div class="login-sub">Login to continue to CopClear</div>
+
+<div class="role-buttons">
+
+<button
+class="role-btn active"
+id="adminRoleBtn"
+onclick="chooseLoginRole('Admin')">
+👮 Admin
+</button>
+
+<button
+class="role-btn"
+id="policeRoleBtn"
+onclick="chooseLoginRole('Traffic Police')">
+🚔 Traffic Police
+</button>
+
+</div>
+
+<label class="form-label">User ID</label>
+
+<input
+class="form-input"
+id="loginUser"
+placeholder="Enter User ID">
+
+<label class="form-label">Password</label>
+
+<input
+class="form-input"
+id="loginPassword"
+type="password"
+placeholder="Enter Password">
+
+<button
+class="login-btn"
+onclick="login()">
+Login
+</button>
+
+<div
+class="login-error"
+id="loginError">
+</div>
+
+<div class="demo-login">
+<strong>Admin:</strong> PRIYA / ADMIN@12345<br>
+<strong>Police:</strong> PRAVEEN / POLICE@101
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= APPLICATION ================= -->
+
+<section id="app" class="hidden">
+
+<header class="topbar">
+
+<div class="top-brand">
+Cop<span>Clear</span>
+</div>
+
+<div class="top-user">
+
+<div class="user-badge" id="topUser">
+</div>
+
+<button
+class="logout-btn"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<aside class="sidebar">
+
+<div class="side-title">Main</div>
+
+<button class="nav-btn" onclick="showPage('dashboard')">
+🏠 Dashboard
+</button>
+
+<!-- ADMIN MENU -->
+
+<div id="adminMenu">
+
+<div class="side-title">Administration</div>
+
+<button class="nav-btn" onclick="showPage('officers')">
+👮 Police Officers
+</button>
+
+<button class="nav-btn" onclick="showPage('dutyAllocation')">
+📋 Duty Allocation
+</button>
+
+<button class="nav-btn" onclick="showPage('workload')">
+📊 Workload Management
+</button>
+
+<button class="nav-btn" onclick="showPage('schedule')">
+🗓 Duty Schedule
+</button>
+
+<button class="nav-btn" onclick="showPage('leaveAdmin')">
+🌴 Leave
+</button>
+
+<button class="nav-btn" onclick="showPage('notifications')">
+🔔 Notifications
+</button>
+
+<button class="nav-btn" onclick="showPage('emergency')">
+🚨 Emergency Messages
+</button>
+
+<button class="nav-btn" onclick="showPage('issues')">
+⚠ Reported Issues
+</button>
+
+<button class="nav-btn" onclick="showPage('reports')">
+📈 Reports & Analytics
+</button>
+
+<button class="nav-btn" onclick="showPage('map')">
+🗺 Sivakasi Map
+</button>
+
+</div>
+
+
+<!-- POLICE MENU -->
+
+<div id="policeMenu">
+
+<div class="side-title">My Work</div>
+
+<button class="nav-btn" onclick="showPage('profile')">
+👤 My Profile
+</button>
+
+<button class="nav-btn" onclick="showPage('assigned')">
+📋 My Assigned Duties
+</button>
+
+<button class="nav-btn" onclick="showPage('today')">
+📅 Today's Duty
+</button>
+
+<button class="nav-btn" onclick="showPage('leavePolice')">
+🌴 Leave
+</button>
+
+<button class="nav-btn" onclick="showPage('history')">
+🕘 Duty History
+</button>
+
+<button class="nav-btn" onclick="showPage('notifications')">
+🔔 Notifications
+</button>
+
+<button class="nav-btn" onclick="showPage('messages')">
+💬 Admin Messages
+</button>
+
+<button class="nav-btn" onclick="showPage('reportIssue')">
+⚠ Report Duty Issue
+</button>
+
+<button class="nav-btn" onclick="showPage('myWorkload')">
+📊 My Workload
+</button>
+
+<button class="nav-btn" onclick="showPage('performance')">
+🏆 Performance Summary
+</button>
+
+<button class="nav-btn" onclick="showPage('map')">
+🗺 Sivakasi Map
+</button>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section class="page active" id="dashboard">
+
+<div class="page-header">
+
+<div>
+<h1 id="dashboardTitle">Dashboard</h1>
+<p id="dashboardSubtitle"></p>
+</div>
+
+</div>
+
+<div class="cards" id="dashboardCards"></div>
+
+<div class="grid-2">
+
+<div class="table-card">
+
+<h3>Recent Activity</h3>
+
+<div id="recentActivity"></div>
+
+</div>
+
+<div class="table-card">
+
+<h3>Quick Actions</h3>
+
+<div id="quickActions"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= OFFICERS ================= -->
+
+<section class="page" id="officers">
+
+<div class="page-header">
+
+<div>
+<h1>Police Officers</h1>
+<p>Manage registered traffic police officers.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>User ID</th>
+<th>Role</th>
+<th>Phone</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="officerTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= DUTY ALLOCATION ================= -->
+
+<section class="page" id="dutyAllocation">
+
+<div class="page-header">
+
+<div>
+<h1>Duty Allocation</h1>
+<p>Assign traffic duties to police officers.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Police Officer</label>
+
+<select id="dutyOfficer"></select>
+</div>
+
+<div class="form-group">
+<label>Duty Point</label>
+
+<select id="dutyLocation">
+
+<option>Sivakasi Bus Stand</option>
+<option>Sivakasi Railway Station</option>
+<option>Main Road</option>
+<option>Four Way Junction</option>
+<option>College Road</option>
+<option>Market Area</option>
+
+</select>
+</div>
+
+<div class="form-group">
+<label>Date</label>
+
+<input type="date" id="dutyDate">
+</div>
+
+<div class="form-group">
+<label>Duty Time</label>
+
+<input type="text"
+id="dutyTime"
+placeholder="10:00 AM - 02:00 PM">
+</div>
+
+<div class="form-group full">
+<label>Instructions</label>
+
+<textarea
+id="dutyInstructions"
+rows="3"
+placeholder="Enter duty instructions"></textarea>
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="assignDuty()">
+Assign Duty
+</button>
+
+</div>
+
+<br>
+
+<div class="table-card">
+
+<h3>Assigned Duties</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Officer</th>
+<th>Location</th>
+<th>Date</th>
+<th>Time</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="adminDutyTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= WORKLOAD ================= -->
+
+<section class="page" id="workload">
+
+<div class="page-header">
+
+<div>
+<h1>Workload Management</h1>
+<p>Monitor officer duty workload.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>Officer</th>
+<th>Total Duties</th>
+<th>Completed</th>
+<th>Pending</th>
+<th>Workload</th>
+</tr>
+</thead>
+
+<tbody id="workloadTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= SCHEDULE ================= -->
+
+<section class="page" id="schedule">
+
+<div class="page-header">
+
+<div>
+<h1>Duty Schedule</h1>
+<p>View all planned traffic duties.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Officer</th>
+<th>Location</th>
+<th>Time</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="scheduleTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= LEAVE ADMIN ================= -->
+
+<section class="page" id="leaveAdmin">
+
+<div class="page-header">
+
+<div>
+<h1>Leave Management</h1>
+<p>Review traffic police leave requests.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>Officer</th>
+<th>From</th>
+<th>To</th>
+<th>Reason</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="adminLeaveTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= NOTIFICATIONS ================= -->
+
+<section class="page" id="notifications">
+
+<div class="page-header">
+
+<div>
+<h1>Notifications</h1>
+<p>System and duty notifications.</p>
+</div>
+
+<button
+class="primary-btn"
+onclick="markNotificationsRead()">
+Mark All Read
+</button>
+
+</div>
+
+<div id="notificationList"></div>
+
+</section>
+
+
+<!-- ================= EMERGENCY ================= -->
+
+<section class="page" id="emergency">
+
+<div class="page-header">
+
+<div>
+<h1>Emergency Messages</h1>
+<p>Send important messages to traffic police.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<div class="form-group">
+
+<label>Message</label>
+
+<textarea
+id="emergencyText"
+rows="4"
+placeholder="Enter emergency message"></textarea>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="sendEmergency()">
+Send Emergency Message
+</button>
+
+</div>
+
+<br>
+
+<div id="emergencyList"></div>
+
+</section>
+
+
+<!-- ================= ISSUES ================= -->
+
+<section class="page" id="issues">
+
+<div class="page-header">
+
+<div>
+<h1>Reported Issues</h1>
+<p>View issues reported by traffic police.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>Officer</th>
+<th>Issue</th>
+<th>Duty</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="issuesTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= REPORTS ================= -->
+
+<section class="page" id="reports">
+
+<div class="page-header">
+
+<div>
+<h1>Reports & Analytics</h1>
+<p>CopClear traffic duty performance summary.</p>
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Total Duties</div>
+<div class="stat-number" id="reportTotal">0</div>
+</div>
+<div class="stat-icon">📋</div>
+</div>
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Completed</div>
+<div class="stat-number" id="reportCompleted">0</div>
+</div>
+<div class="stat-icon">✅</div>
+</div>
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Pending</div>
+<div class="stat-number" id="reportPending">0</div>
+</div>
+<div class="stat-icon">⏳</div>
+</div>
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Issues</div>
+<div class="stat-number" id="reportIssues">0</div>
+</div>
+<div class="stat-icon">⚠</div>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<h3>Officer Performance</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Officer</th>
+<th>Total</th>
+<th>Completed</th>
+<th>Pending</th>
+</tr>
+</thead>
+
+<tbody id="performanceTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= POLICE PROFILE ================= -->
+
+<section class="page" id="profile">
+
+<div class="page-header">
+
+<div>
+<h1>My Profile</h1>
+<p>Traffic police officer profile.</p>
+</div>
+
+</div>
+
+<div class="profile-box">
+
+<div class="profile-avatar">
+👮
+</div>
+
+<div class="profile-details" id="profileDetails"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ASSIGNED DUTIES ================= -->
+
+<section class="page" id="assigned">
+
+<div class="page-header">
+
+<div>
+<h1>My Assigned Duties</h1>
+<p>Duties assigned by the Admin.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>Location</th>
+<th>Date</th>
+<th>Time</th>
+<th>Instructions</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="assignedDutyTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= TODAY ================= -->
+
+<section class="page" id="today">
+
+<div class="page-header">
+
+<div>
+<h1>Today's Duty</h1>
+<p>Your current day's traffic assignment.</p>
+</div>
+
+</div>
+
+<div id="todayDuty"></div>
+
+</section>
+
+
+<!-- ================= POLICE LEAVE ================= -->
+
+<section class="page" id="leavePolice">
+
+<div class="page-header">
+
+<div>
+<h1>Leave</h1>
+<p>Request and track your leave.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>From Date</label>
+<input type="date" id="leaveFrom">
+</div>
+
+<div class="form-group">
+<label>To Date</label>
+<input type="date" id="leaveTo">
+</div>
+
+<div class="form-group full">
+<label>Reason</label>
+<textarea id="leaveReason" rows="3"></textarea>
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="requestLeave()">
+Request Leave
+</button>
+
+</div>
+
+<br>
+
+<div class="table-card">
+
+<h3>My Leave Requests</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Reason</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="policeLeaveTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= HISTORY ================= -->
+
+<section class="page" id="history">
+
+<div class="page-header">
+
+<div>
+<h1>Duty History</h1>
+<p>Your previous duties.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Location</th>
+<th>Time</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="historyTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= MESSAGES ================= -->
+
+<section class="page" id="messages">
+
+<div class="page-header">
+
+<div>
+<h1>Admin Messages</h1>
+<p>Messages and instructions from Admin.</p>
+</div>
+
+</div>
+
+<div id="messageList"></div>
+
+</section>
+
+
+<!-- ================= REPORT ISSUE ================= -->
+
+<section class="page" id="reportIssue">
+
+<div class="page-header">
+
+<div>
+<h1>Report Duty Issue</h1>
+<p>Report a problem with an assigned duty.</p>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<div class="form-group">
+
+<label>Select Duty</label>
+
+<select id="issueDuty"></select>
+
+</div>
+
+<div class="form-group">
+
+<label>Issue Reason</label>
+
+<select id="issueReason">
+
+<option>Traffic congestion</option>
+<option>Vehicle problem</option>
+<option>Location problem</option>
+<option>Health / emergency</option>
+<option>Other duty issue</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Details</label>
+
+<textarea
+id="issueDetails"
+rows="4"></textarea>
+
+</div>
+
+<button
+class="primary-btn"
+onclick="reportIssue()">
+Submit Issue
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= MY WORKLOAD ================= -->
+
+<section class="page" id="myWorkload">
+
+<div class="page-header">
+
+<div>
+<h1>My Workload</h1>
+<p>Your current workload information.</p>
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Total Duties</div>
+<div class="stat-number" id="myTotalDuties">0</div>
+</div>
+<div class="stat-icon">📋</div>
+</div>
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Completed</div>
+<div class="stat-number" id="myCompletedDuties">0</div>
+</div>
+<div class="stat-icon">✅</div>
+</div>
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Pending</div>
+<div class="stat-number" id="myPendingDuties">0</div>
+</div>
+<div class="stat-icon">⏳</div>
+</div>
+
+<div class="card stat-card">
+<div>
+<div class="stat-label">Issues</div>
+<div class="stat-number" id="myIssues">0</div>
+</div>
+<div class="stat-icon">⚠</div>
+</div>
+
+</div>
+
+<div class="table-card">
+
+<h3>Workload Level</h3>
+
+<div id="myWorkloadBar"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= PERFORMANCE ================= -->
+
+<section class="page" id="performance">
+
+<div class="page-header">
+
+<div>
+<h1>Performance Summary</h1>
+<p>Your duty completion performance.</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Completion Rate</h3>
+
+<div
+style="font-size:40px;font-weight:bold;margin-top:15px;color:#092d52"
+id="completionRate">
+0%
+</div>
+
+<div class="progress">
+<div
+class="progress-bar"
+id="completionBar"
+style="width:0%">
+</div>
+</div>
+
+</div>
+
+<br>
+
+<div class="grid-2">
+
+<div class="card">
+<h3>Completed Duties</h3>
+<p style="font-size:30px;margin-top:15px" id="perfCompleted">0</p>
+</div>
+
+<div class="card">
+<h3>Reported Issues</h3>
+<p style="font-size:30px;margin-top:15px" id="perfIssues">0</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= MAP ================= -->
+
+<section class="page" id="map">
+
+<div class="page-header">
+
+<div>
+<h1>Sivakasi Traffic Map</h1>
+<p>Traffic duty and emergency locations.</p>
+</div>
+
+</div>
+
+<div class="map-layout">
+
+<div class="map-side">
+
+<button
+class="map-category"
+onclick="mapLocation('Emergency')">
+🚨 Emergency
+</button>
+
+<button
+class="map-category"
+onclick="mapLocation('Traffic Duty Point')">
+🚦 Traffic Duty Point
+</button>
+
+<button
+class="map-category"
+onclick="mapLocation('Police Deployment')">
+👮 Police Deployment
+</button>
+
+<button
+class="map-category"
+onclick="mapLocation('Important Traffic Area')">
+📍 Important Traffic Area
+</button>
+
+</div>
+
+<div class="map-area" id="mapArea">
+
+<div class="map-road road1"></div>
+<div class="map-road road2"></div>
+<div class="map-road road3"></div>
+
+<div class="map-label" style="top:18%;left:18%">
+Sivakasi Bus Stand
+</div>
+
+<div class="map-label" style="top:65%;left:15%">
+Railway Station
+</div>
+
+<div class="map-label" style="top:30%;right:15%">
+Main Road
+</div>
+
+<div class="map-label" style="bottom:23%;right:20%">
+Four Way Junction
+</div>
+
+<div
+class="marker"
+id="mapMarker"
+style="top:44%;left:50%">
+<span>!</span>
+</div>
+
+<div class="map-info">
+
+<strong id="mapTitle">
+Sivakasi Traffic Map
+</strong>
+
+<p
+id="mapDescription"
+style="margin-top:6px;color:#657589">
+Select a category to view its location.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</section>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   COPCLEAR DATA
+========================================================= */
+
+const officers = [
+
+{
+name:"PRAVEEN",
+password:"POLICE@101",
+phone:"9698060742"
+},
+
+{
+name:"ARUN",
+password:"POLICE@102",
+phone:""
+},
+
+{
+name:"KARTHIK",
+password:"POLICE@103",
+phone:""
+},
+
+{
+name:"SURESH",
+password:"POLICE@104",
+phone:""
+},
+
+{
+name:"VIGNESH",
+password:"POLICE@105",
+phone:""
+},
+
+{
+name:"MEENA",
+password:"POLICE@106",
+phone:""
+},
+
+{
+name:"DIVYA",
+password:"POLICE@107",
+phone:""
+},
+
+{
+name:"KEERTHANA",
+password:"POLICE@108",
+phone:""
+},
+
+{
+name:"ANITHA",
+password:"POLICE@109",
+phone:""
+},
+
+{
+name:"NAVEENA",
+password:"POLICE@110",
+phone:""
+},
+
+{
+name:"RAHUL",
+password:"POLICE@111",
+phone:""
+},
+
+{
+name:"MANOJ",
+password:"POLICE@112",
+phone:""
+},
+
+{
+name:"HARINI",
+password:"POLICE@113",
+phone:""
+},
+
+{
+name:"SANJAY",
+password:"POLICE@114",
+phone:""
+},
+
+{
+name:"POOJA",
+password:"POLICE@115",
+phone:""
+}
+
+];
+
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
+
+function getData(key, fallback){
+
+    const data = localStorage.getItem(key);
+
+    if(!data){
+        return fallback;
+    }
+
+    try{
+        return JSON.parse(data);
+    }catch{
+        return fallback;
+    }
+}
+
+function saveData(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+}
+
+
+/* =========================================================
+   INITIAL DATA
+========================================================= */
+
+if(!localStorage.getItem("copclearDuties")){
+
+    saveData("copclearDuties",[
+        {
+            id:1,
+            officer:"PRAVEEN",
+            location:"Sivakasi Bus Stand",
+            date:new Date().toISOString().split("T")[0],
+            time:"10:00 AM - 02:00 PM",
+            instructions:"Control traffic and monitor vehicle movement.",
+            status:"Pending"
+        }
+    ]);
+
+}
+
+if(!localStorage.getItem("copclearNotifications")){
+
+    saveData("copclearNotifications",[
+        {
+            id:1,
+            recipient:"PRAVEEN",
+            title:"Welcome to CopClear",
+            message:"Your Traffic Police account is active.",
+            time:new Date().toLocaleString(),
+            read:false
+        }
+    ]);
+
+}
+
+if(!localStorage.getItem("copclearLeaves")){
+    saveData("copclearLeaves",[]);
+}
+
+if(!localStorage.getItem("copclearIssues")){
+    saveData("copclearIssues",[]);
+}
+
+if(!localStorage.getItem("copclearMessages")){
+    saveData("copclearMessages",[]);
+}
+
+if(!localStorage.getItem("copclearEmergencies")){
+    saveData("copclearEmergencies",[]);
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+let loginRole = "Admin";
+let currentUser = null;
+
+function chooseLoginRole(role){
+
+    loginRole = role;
+
+    document
+    .getElementById("adminRoleBtn")
+    .classList.toggle(
+        "active",
+        role === "Admin"
+    );
+
+    document
+    .getElementById("policeRoleBtn")
+    .classList.toggle(
+        "active",
+        role === "Traffic Police"
+    );
+
+    document.getElementById("loginError").innerHTML="";
+}
+
+
+function login(){
+
+    const username =
+        document
+        .getElementById("loginUser")
+        .value
+        .trim()
+        .toUpperCase();
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+    if(loginRole === "Admin"){
+
+        if(
+            username === "PRIYA" &&
+            password === "ADMIN@12345"
+        ){
+
+            currentUser={
+                name:"PRIYA",
+                role:"Admin"
+            };
+
+            localStorage.setItem(
+                "copclearCurrentUser",
+                JSON.stringify(currentUser)
+            );
+
+            openApplication();
+
+        }else{
+
+            document
+            .getElementById("loginError")
+            .innerHTML="Invalid Admin ID or Password.";
+
+        }
+
+        return;
+    }
+
+
+    const officer =
+        officers.find(
+            item =>
+            item.name === username &&
+            item.password === password
+        );
+
+    if(officer){
+
+        currentUser={
+            name:officer.name,
+            role:"Traffic Police"
+        };
+
+        localStorage.setItem(
+            "copclearCurrentUser",
+            JSON.stringify(currentUser)
+        );
+
+        openApplication();
+
+    }else{
+
+        document
+        .getElementById("loginError")
+        .innerHTML=
+        "Invalid Traffic Police ID or Password.";
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN APPLICATION
+========================================================= */
+
+function openApplication(){
+
+    document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+    document
+    .getElementById("app")
+    .classList.remove("hidden");
+
+    document
+    .getElementById("topUser")
+    .innerHTML =
+    currentUser.name +
+    " • " +
+    currentUser.role;
+
+    if(currentUser.role === "Admin"){
+
+        document
+        .getElementById("adminMenu")
+        .style.display="block";
+
+        document
+        .getElementById("policeMenu")
+        .style.display="none";
+
+    }else{
+
+        document
+        .getElementById("adminMenu")
+        .style.display="none";
+
+        document
+        .getElementById("policeMenu")
+        .style.display="block";
+
+    }
+
+    showPage("dashboard");
+    refreshAll();
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout(){
+
+    currentUser=null;
+
+    localStorage.removeItem(
+        "copclearCurrentUser"
+    );
+
+    location.reload();
+}
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function showPage(pageId){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(
+        page =>
+        page.classList.remove("active")
+    );
+
+    const page =
+        document.getElementById(pageId);
+
+    if(page){
+        page.classList.add("active");
+    }
+
+    document
+    .querySelectorAll(".nav-btn")
+    .forEach(
+        button =>
+        button.classList.remove("active")
+    );
+
+    refreshAll();
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    const leaves =
+        getData("copclearLeaves",[]);
+
+    const issues =
+        getData("copclearIssues",[]);
+
+    if(currentUser.role === "Admin"){
+
+        document.getElementById("dashboardTitle")
+        .innerHTML="Admin Dashboard";
+
+        document.getElementById("dashboardSubtitle")
+        .innerHTML=
+        "Monitor officers, duties and traffic operations.";
+
+        document.getElementById("dashboardCards")
+        .innerHTML=`
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">Police Officers</div>
+                <div class="stat-number">${officers.length}</div>
+            </div>
+            <div class="stat-icon">👮</div>
+        </div>
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">Total Duties</div>
+                <div class="stat-number">${duties.length}</div>
+            </div>
+            <div class="stat-icon">📋</div>
+        </div>
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">Leave Requests</div>
+                <div class="stat-number">${leaves.filter(x=>x.status==="Pending").length}</div>
+            </div>
+            <div class="stat-icon">🌴</div>
+        </div>
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">Reported Issues</div>
+                <div class="stat-number">${issues.length}</div>
+            </div>
+            <div class="stat-icon">⚠</div>
+        </div>
+
+        `;
+
+        document.getElementById("quickActions")
+        .innerHTML=`
+
+        <button class="action-btn" onclick="showPage('dutyAllocation')">
+        Assign Duty
+        </button>
+
+        <button class="action-btn green" onclick="showPage('leaveAdmin')">
+        Review Leave
+        </button>
+
+        <button class="action-btn orange" onclick="showPage('emergency')">
+        Send Emergency
+        </button>
+
+        <button class="action-btn" onclick="showPage('map')">
+        Open Map
+        </button>
+
+        `;
+
+    }else{
+
+        const myDuties =
+            duties.filter(
+                d => d.officer === currentUser.name
+            );
+
+        const completed =
+            myDuties.filter(
+                d => d.status === "Completed"
+            ).length;
+
+        const pending =
+            myDuties.filter(
+                d => d.status !== "Completed"
+            ).length;
+
+        const myIssues =
+            issues.filter(
+                i => i.officer === currentUser.name
+            ).length;
+
+        document.getElementById("dashboardTitle")
+        .innerHTML="Traffic Police Dashboard";
+
+        document.getElementById("dashboardSubtitle")
+        .innerHTML=
+        "View your assigned duties and traffic activities.";
+
+        document.getElementById("dashboardCards")
+        .innerHTML=`
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">My Duties</div>
+                <div class="stat-number">${myDuties.length}</div>
+            </div>
+            <div class="stat-icon">📋</div>
+        </div>
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">Completed</div>
+                <div class="stat-number">${completed}</div>
+            </div>
+            <div class="stat-icon">✅</div>
+        </div>
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">Pending</div>
+                <div class="stat-number">${pending}</div>
+            </div>
+            <div class="stat-icon">⏳</div>
+        </div>
+
+        <div class="card stat-card">
+            <div>
+                <div class="stat-label">Issues</div>
+                <div class="stat-number">${myIssues}</div>
+            </div>
+            <div class="stat-icon">⚠</div>
+        </div>
+
+        `;
+
+        document.getElementById("quickActions")
+        .innerHTML=`
+
+        <button class="action-btn" onclick="showPage('assigned')">
+        My Duties
+        </button>
+
+        <button class="action-btn green" onclick="showPage('leavePolice')">
+        Request Leave
+        </button>
+
+        <button class="action-btn orange" onclick="showPage('notifications')">
+        Notifications
+        </button>
+
+        <button class="action-btn" onclick="showPage('map')">
+        Open Map
+        </button>
+
+        `;
+    }
+
+    const activity =
+        duties.slice(-5).reverse();
+
+    document.getElementById("recentActivity")
+    .innerHTML =
+        activity.length
+        ?
+        activity.map(
+            d => `
+            <div class="notification">
+                <div class="notification-title">
+                ${d.officer} — ${d.location}
+                </div>
+                <div class="notification-time">
+                ${d.date} • ${d.status}
+                </div>
+            </div>
+            `
+        ).join("")
+        :
+        `<div class="empty">No recent activity.</div>`;
+}
+
+
+/* =========================================================
+   OFFICERS
+========================================================= */
+
+function renderOfficers(){
+
+    const body =
+        document.getElementById("officerTable");
+
+    if(!body) return;
+
+    body.innerHTML =
+        officers.map(
+            o => `
+
+            <tr>
+
+            <td>${o.name}</td>
+
+            <td>${o.name}</td>
+
+            <td>
+            <span class="badge blue">
+            Traffic Police
+            </span>
+            </td>
+
+            <td>${o.phone || "—"}</td>
+
+            <td>
+            <span class="badge green">
+            Active
+            </span>
+            </td>
+
+            </tr>
+
+            `
+        ).join("");
+}
+
+
+/* =========================================================
+   DUTY OFFICER SELECT
+========================================================= */
+
+function renderOfficerSelect(){
+
+    const select =
+        document.getElementById("dutyOfficer");
+
+    if(!select) return;
+
+    select.innerHTML =
+        officers.map(
+            o =>
+            `<option value="${o.name}">
+            ${o.name}
+            </option>`
+        ).join("");
+}
+
+
+/* =========================================================
+   ASSIGN DUTY
+========================================================= */
+
+function assignDuty(){
+
+    const officer =
+        document.getElementById("dutyOfficer").value;
+
+    const location =
+        document.getElementById("dutyLocation").value;
+
+    const date =
+        document.getElementById("dutyDate").value ||
+        new Date().toISOString().split("T")[0];
+
+    const time =
+        document.getElementById("dutyTime").value ||
+        "10:00 AM - 02:00 PM";
+
+    const instructions =
+        document.getElementById("dutyInstructions").value ||
+        "Follow traffic duty instructions.";
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    const duty={
+        id:Date.now(),
+        officer,
+        location,
+        date,
+        time,
+        instructions,
+        status:"Pending"
+    };
+
+    duties.push(duty);
+
+    saveData("copclearDuties",duties);
+
+    const notifications =
+        getData("copclearNotifications",[]);
+
+    notifications.push({
+
+        id:Date.now(),
+
+        recipient:officer,
+
+        title:"New Duty Assigned",
+
+        message:
+        `${location} • ${date} • ${time}`,
+
+        time:new Date().toLocaleString(),
+
+        read:false
+
+    });
+
+    saveData(
+        "copclearNotifications",
+        notifications
+    );
+
+    const messages =
+        getData("copclearMessages",[]);
+
+    messages.push({
+
+        id:Date.now(),
+
+        recipient:officer,
+
+        title:"Duty Instruction",
+
+        message:instructions,
+
+        time:new Date().toLocaleString()
+
+    });
+
+    saveData(
+        "copclearMessages",
+        messages
+    );
+
+    document.getElementById("dutyInstructions").value="";
+
+    toast("Duty assigned successfully.");
+
+    refreshAll();
+}
+
+
+/* =========================================================
+   ADMIN DUTY TABLE
+========================================================= */
+
+function renderAdminDuties(){
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    document.getElementById("adminDutyTable")
+    .innerHTML =
+        duties.map(
+            d => `
+
+            <tr>
+
+            <td>${d.officer}</td>
+            <td>${d.location}</td>
+            <td>${d.date}</td>
+            <td>${d.time}</td>
+
+            <td>
+            <span class="badge ${
+                d.status==="Completed"
+                ? "green"
+                : d.status==="Accepted"
+                ? "blue"
+                : "orange"
+            }">
+            ${d.status}
+            </span>
+            </td>
+
+            </tr>
+
+            `
+        ).join("");
+}
+
+
+/* =========================================================
+   POLICE ASSIGNED DUTIES
+========================================================= */
+
+function renderAssigned(){
+
+    if(!currentUser ||
+       currentUser.role !== "Traffic Police")
+       return;
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    const mine =
+        duties.filter(
+            d => d.officer === currentUser.name
+        );
+
+    document.getElementById("assignedDutyTable")
+    .innerHTML =
+        mine.length
+        ?
+        mine.map(
+            d => `
+
+            <tr>
+
+            <td>${d.location}</td>
+            <td>${d.date}</td>
+            <td>${d.time}</td>
+            <td>${d.instructions}</td>
+
+            <td>
+            <span class="badge ${
+                d.status==="Completed"
+                ? "green"
+                : "orange"
+            }">
+            ${d.status}
+            </span>
+            </td>
+
+            <td>
+
+            ${
+                d.status==="Pending"
+                ?
+                `
+                <button
+                class="action-btn green"
+                onclick="acceptDuty(${d.id})">
+                Accept
+                </button>
+
+                <button
+                class="action-btn red"
+                onclick="openIssueForDuty(${d.id})">
+                Report Issue
+                </button>
+                `
+                :
+                d.status==="Accepted"
+                ?
+                `
+                <button
+                class="action-btn green"
+                onclick="completeDuty(${d.id})">
+                Complete
+                </button>
+                `
+                :
+                `<span class="badge green">Done</span>`
+            }
+
+            </td>
+
+            </tr>
+
+            `
+        ).join("")
+        :
+        `<tr>
+        <td colspan="6" class="empty">
+        No duties assigned.
+        </td>
+        </tr>`;
+}
+
+
+/* =========================================================
+   ACCEPT DUTY
+========================================================= */
+
+function acceptDuty(id){
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    const duty =
+        duties.find(d=>d.id===id);
+
+    if(!duty) return;
+
+    duty.status="Accepted";
+
+    saveData(
+        "copclearDuties",
+        duties
+    );
+
+    addNotification(
+        "PRIYA",
+        "Duty Accepted",
+        `${currentUser.name} accepted ${duty.location}`
+    );
+
+    toast("Duty accepted.");
+
+    refreshAll();
+}
+
+
+/* =========================================================
+   COMPLETE DUTY
+========================================================= */
+
+function completeDuty(id){
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    const duty =
+        duties.find(d=>d.id===id);
+
+    if(!duty) return;
+
+    duty.status="Completed";
+
+    saveData(
+        "copclearDuties",
+        duties
+    );
+
+    addNotification(
+        "PRIYA",
+        "Duty Completed",
+        `${currentUser.name} completed ${duty.location}`
+    );
+
+    toast("Duty marked as completed.");
+
+    refreshAll();
+}
+
+
+/* =========================================================
+   TODAY'S DUTY
+========================================================= */
+
+function renderToday(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+    const duties =
+        getData("copclearDuties",[])
+        .filter(
+            d =>
+            d.officer===currentUser.name &&
+            d.date===today
+        );
+
+    document.getElementById("todayDuty")
+    .innerHTML =
+        duties.length
+        ?
+        duties.map(
+            d => `
+
+            <div class="card">
+
+            <h2>${d.location}</h2>
+
+            <p style="margin-top:10px">
+            <strong>Date:</strong> ${d.date}
+            </p>
+
+            <p style="margin-top:7px">
+            <strong>Time:</strong> ${d.time}
+            </p>
+
+            <p style="margin-top:7px">
+            <strong>Instructions:</strong>
+            ${d.instructions}
+            </p>
+
+            <br>
+
+            <span class="badge orange">
+            ${d.status}
+            </span>
+
+            </div>
+
+            `
+        ).join("")
+        :
+        `<div class="card empty">
+        No duty assigned for today.
+        </div>`;
+}
+
+
+/* =========================================================
+   DUTY HISTORY
+========================================================= */
+
+function renderHistory(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const duties =
+        getData("copclearDuties",[])
+        .filter(
+            d=>d.officer===currentUser.name
+        );
+
+    document.getElementById("historyTable")
+    .innerHTML =
+        duties.length
+        ?
+        duties.map(
+            d => `
+
+            <tr>
+
+            <td>${d.date}</td>
+            <td>${d.location}</td>
+            <td>${d.time}</td>
+
+            <td>
+            <span class="badge ${
+                d.status==="Completed"
+                ? "green"
+                : "orange"
+            }">
+            ${d.status}
+            </span>
+            </td>
+
+            </tr>
+
+            `
+        ).join("")
+        :
+        `<tr>
+        <td colspan="4" class="empty">
+        No duty history.
+        </td>
+        </tr>`;
+}
+
+
+/* =========================================================
+   LEAVE REQUEST
+========================================================= */
+
+function requestLeave(){
+
+    const from =
+        document.getElementById("leaveFrom").value;
+
+    const to =
+        document.getElementById("leaveTo").value;
+
+    const reason =
+        document.getElementById("leaveReason").value.trim();
+
+    if(!from || !to || !reason){
+
+        toast("Please fill all leave details.");
+        return;
+    }
+
+    const leaves =
+        getData("copclearLeaves",[]);
+
+    leaves.push({
+
+        id:Date.now(),
+
+        officer:currentUser.name,
+
+        from,
+
+        to,
+
+        reason,
+
+        status:"Pending"
+
+    });
+
+    saveData(
+        "copclearLeaves",
+        leaves
+    );
+
+    addNotification(
+        "PRIYA",
+        "New Leave Request",
+        `${currentUser.name} requested leave.`
+    );
+
+    document.getElementById("leaveReason").value="";
+
+    toast("Leave request submitted.");
+
+    refreshAll();
+}
+
+
+/* =========================================================
+   POLICE LEAVE TABLE
+========================================================= */
+
+function renderPoliceLeaves(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const leaves =
+        getData("copclearLeaves",[])
+        .filter(
+            l=>l.officer===currentUser.name
+        );
+
+    document.getElementById("policeLeaveTable")
+    .innerHTML =
+        leaves.length
+        ?
+        leaves.map(
+            l=>`
+
+            <tr>
+
+            <td>${l.from}</td>
+            <td>${l.to}</td>
+            <td>${l.reason}</td>
+
+            <td>
+            <span class="badge ${
+                l.status==="Approved"
+                ? "green"
+                : l.status==="Rejected"
+                ? "red"
+                : "orange"
+            }">
+            ${l.status}
+            </span>
+            </td>
+
+            </tr>
+
+            `
+        ).join("")
+        :
+        `<tr>
+        <td colspan="4" class="empty">
+        No leave requests.
+        </td>
+        </tr>`;
+}
+
+
+/* =========================================================
+   ADMIN LEAVE
+========================================================= */
+
+function renderAdminLeaves(){
+
+    if(currentUser.role!=="Admin")
+    return;
+
+    const leaves =
+        getData("copclearLeaves",[]);
+
+    document.getElementById("adminLeaveTable")
+    .innerHTML =
+        leaves.length
+        ?
+        leaves.map(
+            l=>`
+
+            <tr>
+
+            <td>${l.officer}</td>
+            <td>${l.from}</td>
+            <td>${l.to}</td>
+            <td>${l.reason}</td>
+
+            <td>
+            <span class="badge ${
+                l.status==="Approved"
+                ? "green"
+                : l.status==="Rejected"
+                ? "red"
+                : "orange"
+            }">
+            ${l.status}
+            </span>
+            </td>
+
+            <td>
+
+            ${
+                l.status==="Pending"
+                ?
+                `
+                <button
+                class="action-btn green"
+                onclick="leaveAction(${l.id},'Approved')">
+                Approve
+                </button>
+
+                <button
+                class="action-btn red"
+                onclick="leaveAction(${l.id},'Rejected')">
+                Reject
+                </button>
+                `
+                :
+                "—"
+            }
+
+            </td>
+
+            </tr>
+
+            `
+        ).join("")
+        :
+        `<tr>
+        <td colspan="6" class="empty">
+        No leave requests.
+        </td>
+        </tr>`;
+}
+
+
+/* =========================================================
+   LEAVE APPROVE / REJECT
+========================================================= */
+
+function leaveAction(id,status){
+
+    const leaves =
+        getData("copclearLeaves",[]);
+
+    const leave =
+        leaves.find(l=>l.id===id);
+
+    if(!leave) return;
+
+    leave.status=status;
+
+    saveData(
+        "copclearLeaves",
+        leaves
+    );
+
+    addNotification(
+        leave.officer,
+        "Leave Request Updated",
+        `Your leave request has been ${status.toLowerCase()}.`
+    );
+
+    toast(
+        "Leave request " +
+        status.toLowerCase() +
+        "."
+    );
+
+    refreshAll();
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function addNotification(
+    recipient,
+    title,
+    message
+){
+
+    const notifications =
+        getData(
+            "copclearNotifications",
+            []
+        );
+
+    notifications.push({
+
+        id:Date.now()+Math.random(),
+
+        recipient,
+
+        title,
+
+        message,
+
+        time:new Date().toLocaleString(),
+
+        read:false
+
+    });
+
+    saveData(
+        "copclearNotifications",
+        notifications
+    );
+}
+
+
+function renderNotifications(){
+
+    const all =
+        getData(
+            "copclearNotifications",
+            []
+        );
+
+    const mine =
+        currentUser.role==="Admin"
+        ?
+        all.filter(
+            n=>n.recipient==="PRIYA"
+        )
+        :
+        all.filter(
+            n=>n.recipient===currentUser.name
+        );
+
+    document.getElementById("notificationList")
+    .innerHTML =
+        mine.length
+        ?
+        mine.slice().reverse().map(
+            n=>`
+
+            <div class="notification ${
+                n.read ? "" : "unread"
+            }">
+
+            <div class="notification-title">
+            ${n.title}
+            </div>
+
+            <div style="margin-top:7px">
+            ${n.message}
+            </div>
+
+            <div class="notification-time">
+            ${n.time}
+            </div>
+
+            </div>
+
+            `
+        ).join("")
+        :
+        `<div class="empty">
+        No notifications.
+        </div>`;
+}
+
+
+function markNotificationsRead(){
+
+    const all =
+        getData(
+            "copclearNotifications",
+            []
+        );
+
+    all.forEach(
+        n=>{
+            if(
+                n.recipient ===
+                currentUser.name
+            ){
+                n.read=true;
+            }
+        }
+    );
+
+    saveData(
+        "copclearNotifications",
+        all
+    );
+
+    toast("All notifications marked as read.");
+
+    refreshAll();
+}
+
+
+/* =========================================================
+   EMERGENCY
+========================================================= */
+
+function sendEmergency(){
+
+    const text =
+        document
+        .getElementById("emergencyText")
+        .value
+        .trim();
+
+    if(!text){
+
+        toast("Enter an emergency message.");
+        return;
+    }
+
+    const emergencies =
+        getData(
+            "copclearEmergencies",
+            []
+        );
+
+    emergencies.push({
+
+        id:Date.now(),
+
+        message:text,
+
+        time:new Date().toLocaleString(),
+
+        sender:"PRIYA"
+
+    });
+
+    saveData(
+        "copclearEmergencies",
+        emergencies
+    );
+
+    officers.forEach(
+        o=>{
+            addNotification(
+                o.name,
+                "🚨 Emergency Message",
+                text
+            );
+        }
+    );
+
+    document.getElementById("emergencyText").value="";
+
+    toast("Emergency message sent.");
+
+    refreshAll();
+}
+
+
+function renderEmergencies(){
+
+    const emergencies =
+        getData(
+            "copclearEmergencies",
+            []
+        );
+
+    document.getElementById("emergencyList")
+    .innerHTML =
+        emergencies.length
+        ?
+        emergencies.slice().reverse().map(
+            e=>`
+
+            <div class="alert-box">
+
+            <strong>🚨 Emergency Message</strong>
+
+            <p style="margin-top:7px">
+            ${e.message}
+            </p>
+
+            <small>
+            ${e.time}
+            </small>
+
+            </div>
+
+            `
+        ).join("")
+        :
+        `<div class="empty">
+        No emergency messages.
+        </div>`;
+}
+
+
+/* =========================================================
+   ADMIN MESSAGES
+========================================================= */
+
+function renderMessages(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const messages =
+        getData(
+            "copclearMessages",
+            []
+        )
+        .filter(
+            m=>m.recipient===currentUser.name
+        );
+
+    document.getElementById("messageList")
+    .innerHTML =
+        messages.length
+        ?
+        messages.slice().reverse().map(
+            m=>`
+
+            <div class="notification">
+
+            <div class="notification-title">
+            ${m.title}
+            </div>
+
+            <p style="margin-top:7px">
+            ${m.message}
+            </p>
+
+            <div class="notification-time">
+            ${m.time}
+            </div>
+
+            </div>
+
+            `
+        ).join("")
+        :
+        `<div class="empty">
+        No messages from Admin.
+        </div>`;
+}
+
+
+/* =========================================================
+   ISSUES
+========================================================= */
+
+function openIssueForDuty(id){
+
+    showPage("reportIssue");
+
+    const select =
+        document.getElementById("issueDuty");
+
+    select.value=id;
+}
+
+
+function renderIssueDutySelect(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const duties =
+        getData("copclearDuties",[])
+        .filter(
+            d=>d.officer===currentUser.name
+        );
+
+    document.getElementById("issueDuty")
+    .innerHTML =
+        duties.map(
+            d=>
+            `<option value="${d.id}">
+            ${d.location} - ${d.date}
+            </option>`
+        ).join("");
+}
+
+
+function reportIssue(){
+
+    const dutyId =
+        Number(
+            document
+            .getElementById("issueDuty")
+            .value
+        );
+
+    const reason =
+        document
+        .getElementById("issueReason")
+        .value;
+
+    const details =
+        document
+        .getElementById("issueDetails")
+        .value
+        .trim();
+
+    if(!details){
+
+        toast("Please enter issue details.");
+        return;
+    }
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    const duty =
+        duties.find(
+            d=>d.id===dutyId
+        );
+
+    const issues =
+        getData(
+            "copclearIssues",
+            []
+        );
+
+    issues.push({
+
+        id:Date.now(),
+
+        officer:currentUser.name,
+
+        duty:
+        duty
+        ?
+        duty.location
+        :
+        "Duty",
+
+        reason,
+
+        details,
+
+        status:"Reported"
+
+    });
+
+    saveData(
+        "copclearIssues",
+        issues
+    );
+
+    addNotification(
+        "PRIYA",
+        "Duty Issue Reported",
+        `${currentUser.name}: ${reason}`
+    );
+
+    document.getElementById("issueDetails").value="";
+
+    toast("Duty issue reported.");
+
+    refreshAll();
+}
+
+
+function renderIssues(){
+
+    const issues =
+        getData(
+            "copclearIssues",
+            []
+        );
+
+    document.getElementById("issuesTable")
+    .innerHTML =
+        issues.length
+        ?
+        issues.map(
+            i=>`
+
+            <tr>
+
+            <td>${i.officer}</td>
+
+            <td>
+            ${i.reason}<br>
+            <small>${i.details}</small>
+            </td>
+
+            <td>${i.duty}</td>
+
+            <td>
+            <span class="badge orange">
+            ${i.status}
+            </span>
+            </td>
+
+            </tr>
+
+            `
+        ).join("")
+        :
+        `<tr>
+        <td colspan="4" class="empty">
+        No reported issues.
+        </td>
+        </tr>`;
+}
+
+
+/* =========================================================
+   WORKLOAD
+========================================================= */
+
+function renderWorkload(){
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    document.getElementById("workloadTable")
+    .innerHTML =
+        officers.map(
+            o=>{
+
+                const mine =
+                    duties.filter(
+                        d=>d.officer===o.name
+                    );
+
+                const completed =
+                    mine.filter(
+                        d=>d.status==="Completed"
+                    ).length;
+
+                const pending =
+                    mine.length-completed;
+
+                let level="Low";
+
+                if(mine.length>=4)
+                    level="High";
+                else if(mine.length>=2)
+                    level="Medium";
+
+                return `
+
+                <tr>
+
+                <td>${o.name}</td>
+
+                <td>${mine.length}</td>
+
+                <td>${completed}</td>
+
+                <td>${pending}</td>
+
+                <td>
+
+                <span class="badge ${
+                    level==="High"
+                    ? "red"
+                    : level==="Medium"
+                    ? "orange"
+                    : "green"
+                }">
+                ${level}
+                </span>
+
+                </td>
+
+                </tr>
+
+                `;
+
+            }
+        ).join("");
+}
+
+
+/* =========================================================
+   SCHEDULE
+========================================================= */
+
+function renderSchedule(){
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    document.getElementById("scheduleTable")
+    .innerHTML =
+        duties.map(
+            d=>`
+
+            <tr>
+
+            <td>${d.date}</td>
+            <td>${d.officer}</td>
+            <td>${d.location}</td>
+            <td>${d.time}</td>
+
+            <td>
+            <span class="badge blue">
+            ${d.status}
+            </span>
+            </td>
+
+            </tr>
+
+            `
+        ).join("");
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function renderProfile(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const officer =
+        officers.find(
+            o=>o.name===currentUser.name
+        );
+
+    document.getElementById("profileDetails")
+    .innerHTML=`
+
+    <div>
+    <strong>Name</strong>
+    ${officer.name}
+    </div>
+
+    <div>
+    <strong>User ID</strong>
+    ${officer.name}
+    </div>
+
+    <div>
+    <strong>Role</strong>
+    Traffic Police
+    </div>
+
+    <div>
+    <strong>Phone</strong>
+    ${officer.phone || "Not added"}
+    </div>
+
+    <div>
+    <strong>Department</strong>
+    Sivakasi Traffic Police
+    </div>
+
+    <div>
+    <strong>Status</strong>
+    <span class="badge green">Active</span>
+    </div>
+
+    `;
+}
+
+
+/* =========================================================
+   MY WORKLOAD
+========================================================= */
+
+function renderMyWorkload(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const duties =
+        getData("copclearDuties",[])
+        .filter(
+            d=>d.officer===currentUser.name
+        );
+
+    const issues =
+        getData("copclearIssues",[])
+        .filter(
+            i=>i.officer===currentUser.name
+        );
+
+    const completed =
+        duties.filter(
+            d=>d.status==="Completed"
+        ).length;
+
+    const pending =
+        duties.length-completed;
+
+    document.getElementById("myTotalDuties")
+    .innerHTML=duties.length;
+
+    document.getElementById("myCompletedDuties")
+    .innerHTML=completed;
+
+    document.getElementById("myPendingDuties")
+    .innerHTML=pending;
+
+    document.getElementById("myIssues")
+    .innerHTML=issues.length;
+
+    const percentage =
+        duties.length
+        ?
+        Math.round(
+            completed/duties.length*100
+        )
+        :
+        0;
+
+    document.getElementById("myWorkloadBar")
+    .innerHTML=`
+
+    <p>
+    Current workload: <strong>${duties.length}</strong> duties
+    </p>
+
+    <div class="progress">
+
+    <div
+    class="progress-bar"
+    style="width:${Math.min(duties.length*20,100)}%">
+    </div>
+
+    </div>
+
+    <p style="margin-top:10px">
+    Completion: ${percentage}%
+    </p>
+
+    `;
+}
+
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+function renderPerformance(){
+
+    if(currentUser.role!=="Traffic Police")
+    return;
+
+    const duties =
+        getData("copclearDuties",[])
+        .filter(
+            d=>d.officer===currentUser.name
+        );
+
+    const issues =
+        getData("copclearIssues",[])
+        .filter(
+            i=>i.officer===currentUser.name
+        );
+
+    const completed =
+        duties.filter(
+            d=>d.status==="Completed"
+        ).length;
+
+    const rate =
+        duties.length
+        ?
+        Math.round(
+            completed/duties.length*100
+        )
+        :
+        0;
+
+    document.getElementById("completionRate")
+    .innerHTML=rate+"%";
+
+    document.getElementById("completionBar")
+    .style.width=rate+"%";
+
+    document.getElementById("perfCompleted")
+    .innerHTML=completed;
+
+    document.getElementById("perfIssues")
+    .innerHTML=issues.length;
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+function renderReports(){
+
+    const duties =
+        getData("copclearDuties",[]);
+
+    const issues =
+        getData("copclearIssues",[]);
+
+    const completed =
+        duties.filter(
+            d=>d.status==="Completed"
+        ).length;
+
+    document.getElementById("reportTotal")
+    .innerHTML=duties.length;
+
+    document.getElementById("reportCompleted")
+    .innerHTML=completed;
+
+    document.getElementById("reportPending")
+    .innerHTML=
+        duties.length-completed;
+
+    document.getElementById("reportIssues")
+    .innerHTML=issues.length;
+
+    document.getElementById("performanceTable")
+    .innerHTML =
+        officers.map(
+            o=>{
+
+                const mine =
+                    duties.filter(
+                        d=>d.officer===o.name
+                    );
+
+                const done =
+                    mine.filter(
+                        d=>d.status==="Completed"
+                    ).length;
+
+                return `
+
+                <tr>
+
+                <td>${o.name}</td>
+                <td>${mine.length}</td>
+                <td>${done}</td>
+                <td>${mine.length-done}</td>
+
+                </tr>
+
+                `;
+
+            }
+        ).join("");
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+function mapLocation(type){
+
+    const marker =
+        document.getElementById("mapMarker");
+
+    const title =
+        document.getElementById("mapTitle");
+
+    const description =
+        document.getElementById("mapDescription");
+
+    const locations={
+
+        "Emergency":{
+            top:"25%",
+            left:"25%",
+            title:"Emergency — Sivakasi Bus Stand",
+            description:
+            "Emergency response location near Sivakasi Bus Stand."
+        },
+
+        "Traffic Duty Point":{
+            top:"43%",
+            left:"52%",
+            title:"Traffic Duty Point — Main Road",
+            description:
+            "Traffic police duty monitoring point."
+        },
+
+        "Police Deployment":{
+            top:"66%",
+            left:"24%",
+            title:"Police Deployment — Railway Station",
+            description:
+            "Police deployment area near Sivakasi Railway Station."
+        },
+
+        "Important Traffic Area":{
+            top:"30%",
+            left:"73%",
+            title:"Important Traffic Area — Four Way Junction",
+            description:
+            "Important traffic movement area."
+        }
+
+    };
+
+    const location =
+        locations[type];
+
+    marker.style.top=location.top;
+    marker.style.left=location.left;
+
+    title.innerHTML=location.title;
+
+    description.innerHTML=
+        location.description;
+
+    toast(type+" selected on map.");
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+    const box =
+        document.getElementById("toast");
+
+    box.innerHTML=message;
+
+    box.classList.add("show");
+
+    setTimeout(
+        ()=>{
+            box.classList.remove("show");
+        },
+        2500
+    );
+}
+
+
+/* =========================================================
+   REFRESH EVERYTHING
+========================================================= */
+
+function refreshAll(){
+
+    renderDashboard();
+
+    renderOfficers();
+
+    renderOfficerSelect();
+
+    renderAdminDuties();
+
+    renderAssigned();
+
+    renderToday();
+
+    renderHistory();
+
+    renderPoliceLeaves();
+
+    renderAdminLeaves();
+
+    renderNotifications();
+
+    renderEmergencies();
+
+    renderMessages();
+
+    renderIssues();
+
+    renderIssueDutySelect();
+
+    renderWorkload();
+
+    renderSchedule();
+
+    renderProfile();
+
+    renderMyWorkload();
+
+    renderPerformance();
+
+    renderReports();
+}
+
+
+/* =========================================================
+   AUTO LOGIN CHECK
+========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        const saved =
+            localStorage.getItem(
+                "copclearCurrentUser"
+            );
+
+        if(saved){
+
+            try{
+
+                currentUser =
+                    JSON.parse(saved);
+
+                openApplication();
+
+            }catch{
+
+                localStorage.removeItem(
+                    "copclearCurrentUser"
+                );
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
